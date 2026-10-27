@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Terminal window frame -->
+    <path
+        android:fillColor="#B3261E"
+        android:pathData="M30,34 L78,34 A6,6 0 0 1 84,40 L84,74 A6,6 0 0 1 78,80 L30,80 A6,6 0 0 1 24,74 L24,40 A6,6 0 0 1 30,34 Z" />
+    <!-- Title bar dots -->
+    <path
+        android:fillColor="#FFFBFE"
+        android:pathData="M33,40 a2,2 0 1 0,0.01 0" />
+    <path
+        android:fillColor="#FFFBFE"
+        android:pathData="M40,40 a2,2 0 1 0,0.01 0" />
+    <path
+        android:fillColor="#FFFBFE"
+        android:pathData="M47,40 a2,2 0 1 0,0.01 0" />
+    <!-- Terminal prompt -->
+    <path
+        android:fillColor="#FFFBFE"
+        android:pathData="M33,54 L41,59 L33,64 Z" />
+    <path
+        android:fillColor="#FFFBFE"
+        android:pathData="M45,64 L55,64 L55,60 L45,60 Z" />
+</vector>

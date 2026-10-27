@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- AAPT2 only accepts <adaptive-icon> in an API-26+ qualified folder, so this one
+         "redundant -v26 qualifier" warning (the app's minSdk is 26) is a false positive:
+         merging the icon into plain mipmap-anydpi breaks resource linking. -->
+    <issue id="ObsoleteSdkInt">
+        <ignore path="src/main/res/mipmap-anydpi-v26" />
+    </issue>
+</lint>

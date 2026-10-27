@@ -1,0 +1,45 @@
+# Leak-scan allowlist. Read this before adding a line: every entry below exempts one
+# specific, already-reviewed file. A new entry is a review decision, not a way to make a
+# warning go away - if you are not certain the match is fake, do not allowlist it.
+#
+# What is exempted, and why none of it is a secret:
+#
+#   app/src/test/resources/keys/       one throwaway key per format JSch is asked to
+#   app/src/androidTest/assets/keys/   accept, so key import can be tested for real:
+#     test_ed25519        unencrypted ed25519, comment "screenlink-test"
+#     test_rsa_pass       RSA, passphrase "pass123" - written in KeyValidationTest.kt
+#     test_rsa_pkcs1_enc  RSA, passphrase "keypass" - written in KeyValidationTest.kt
+#
+#   KeyValidationTest.kt, ConnectionRepositoryTest.kt, RoomKeystoreFunctionalTest.kt
+#     one-line stubs used to test rejection paths and persistence, e.g.
+#     "-----BEGIN OPENSSH PRIVATE KEY-----\nabc\n-----END OPENSSH PRIVATE KEY-----"
+#     The body is literally "abc" / "no". No key material at all.
+#
+# A passphrase published in the same repository protects nothing, none of these keys is
+# authorized on any host this project uses, and the androidTest copies never reach users
+# (they stay in the androidTest APK, not the app APK).
+#
+# Paths rather than regexes on purpose: the scanner fires on the PEM/OpenSSH header, and a
+# multiline private-key match is exactly the case that cannot be safely regex-allowlisted.
+# Each entry is anchored to one filename, so a real key anywhere else in the tree is still
+# caught. If a test ever needs a realistic key, generate it at runtime instead of adding a
+# line here - BouncyCastle is already a dependency.
+#
+# keystore/sideload.p12 is deliberately NOT listed. It is a throwaway sideload signature
+# (password in app/build.gradle.kts, digest pinned in the release workflow) and a binary
+# PKCS#12 does not match the private-key rules anyway.
+#
+# Only the top-level [allowlist] section is read by the corporate scanner; [[rules]] and
+# [rules.allowlist] written here would be ignored.
+[allowlist]
+  description = "Throwaway SSH key fixtures and PEM stubs used by the tests"
+  paths = [
+    '''app/src/test/resources/keys/test_ed25519$''',
+    '''app/src/test/resources/keys/test_rsa_pass$''',
+    '''app/src/test/resources/keys/test_rsa_pkcs1_enc$''',
+    '''app/src/androidTest/assets/keys/test_ed25519$''',
+    '''app/src/androidTest/assets/keys/test_rsa_pass$''',
+    '''app/src/test/java/com/sangiorgisrl/screenlink/ssh/KeyValidationTest\.kt$''',
+    '''app/src/test/java/com/sangiorgisrl/screenlink/data/ConnectionRepositoryTest\.kt$''',
+    '''app/src/androidTest/java/com/sangiorgisrl/screenlink/data/RoomKeystoreFunctionalTest\.kt$''',
+  ]

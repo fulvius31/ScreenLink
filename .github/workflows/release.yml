@@ -1,0 +1,234 @@
+# Pushing a v* tag publishes one APK: the **debug** build, the one that installs with a
+# tap or `adb install -r`. No release-build asset - an unsigned release APK does not
+# install at all, and a minified one is not what a hand-carried install wants.
+#
+# WHY TWO JOBS. On a tag push GitHub runs the workflow definition *from the pushed ref*,
+# so a tag pointing at a commit whose copy of this file was edited would run that edited
+# copy - with write access to the repository in scope. `build` therefore holds only
+# `contents: read`, and `publish`, the only job that can write, runs in the `release`
+# environment. If that environment does not exist GitHub creates it on the first run;
+# adding required reviewers to it (Settings -> Environments -> release) turns publishing
+# into a human approval. Protect v* tag pushes as well (Settings -> Rules). The ancestry
+# check below only catches honest mistakes.
+#
+# SIGNING - and why no job reads a secret. Gradle signs the debug APK with
+# keystore/sideload.p12, checked into this repository on purpose: its only job is a
+# signature that never changes, so a new release installs over the one already on the
+# phone and keeps the pinned host keys and saved connections. AGP's own debug key is
+# generated fresh per machine and per runner, which would turn every upgrade into an
+# uninstall. The key is throwaway and public by design - it attests nothing about who
+# built an APK, so take APKs only from this repository's releases - and it signs nothing
+# else; a Play upload needs its own key, and -Pscreenlink.sideloadKeystore=... overrides
+# it in Gradle without touching this file. The build job pins the certificate digest
+# below, so a swapped keystore or a silent fallback to AGP's debug key fails the run
+# instead of stranding every install that is already out there.
+#
+# What is being shipped, stated plainly: a debuggable, unminified build (`run-as` works,
+# app data is readable on a rooted device). No minified build is published or built in CI
+# at all; `./gradlew :app:assembleRelease` (R8 + lintVitalRelease) stays a local step for
+# anyone who wants it, and a prerequisite for a Play upload.
+#
+# The instrumented suite (`:app:connectedDebugAndroidTest`) needs an emulator and runs in
+# neither job.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+
+jobs:
+  build:
+    name: build and gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # fetch-depth: 0 so the ancestry check has a default branch to compare against.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+
+      - uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
+
+      - name: The tag must be on the default branch
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_REF_TYPE:-}" != tag ]; then
+            echo "Not a tag run: skipping the tag checks."
+            exit 0
+          fi
+          remote="refs/remotes/origin/$DEFAULT_BRANCH"
+          if ! git rev-parse --verify "$remote" >/dev/null 2>&1; then
+            git fetch --no-tags --prune origin "refs/heads/$DEFAULT_BRANCH:$remote"
+          fi
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" "$remote"; then
+            echo "::error::$GITHUB_REF_NAME is not on $DEFAULT_BRANCH: that branch does not contain $GITHUB_SHA. Merge first, then tag."
+            exit 1
+          fi
+
+      - name: The tag must be the version this app declares
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_REF_TYPE:-}" != tag ]; then
+            exit 0
+          fi
+          declared=$(sed -n 's/^[[:space:]]*versionName = "\([^"]*\)".*/\1/p' app/build.gradle.kts)
+          tag=${GITHUB_REF_NAME#v}
+          # v1.2.0-rc1 is allowed to carry versionName 1.2.0.
+          if [ "$declared" != "$tag" ] && [ "$declared" != "${tag%%-*}" ]; then
+            echo "::error::tag $GITHUB_REF_NAME but app/build.gradle.kts declares versionName \"$declared\". Bump the version, then tag."
+            exit 1
+          fi
+          echo "tag $GITHUB_REF_NAME matches versionName $declared"
+
+      - name: Gate (tests + lint, the same checks CI runs)
+        run: ./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug
+
+      - name: Build the debug APK
+        run: ./gradlew --no-daemon :app:assembleDebug
+
+      # The checked-in key exists so the signature never moves. Pin its digest: a replaced
+      # keystore, or a signing config that silently fell back to AGP's per-runner debug
+      # key, fails here rather than stranding the installs people already have. Rotate the
+      # pin deliberately, in the same commit as the new key.
+      - name: The APK carries the sideload key everyone expects
+        run: |
+          set -euo pipefail
+          apksigner="$ANDROID_HOME/build-tools/35.0.0/apksigner"
+          apk=app/build/outputs/apk/debug/app-debug.apk
+          # sed, not grep -q: sed reads the whole stream, so no SIGPIPE under pipefail.
+          cert=$("$apksigner" verify --print-certs "$apk" |
+            sed -n 's/^Signer #1 certificate SHA-256 digest: //p')
+          expected=cf4df1286de1faade5401f6b122a750c62cad140a11fdeacb8a07c193a9c8ec1
+          if [ "$cert" != "$expected" ]; then
+            echo "::error::app-debug.apk is signed with \"$cert\", not the checked-in sideload key (\"$expected\"). Restore the signing config, or update this pin on purpose."
+            exit 1
+          fi
+          echo "signed with the sideload key: $cert"
+
+      - name: The built APK is the version the tag says
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_REF_TYPE:-}" != tag ]; then
+            exit 0
+          fi
+          aapt="$ANDROID_HOME/build-tools/35.0.0/aapt"
+          apk=app/build/outputs/apk/debug/app-debug.apk
+          # The manifest, not the build file: what is in the artifact is what ships.
+          tag=${GITHUB_REF_NAME#v}
+          built=$("$aapt" dump badging "$apk" | sed -n "s/.*versionName='\([^']*\)'.*/\1/p")
+          if [ "$built" != "$tag" ] && [ "$built" != "${tag%%-*}" ]; then
+            echo "::error::the built APK reports versionName \"$built\", the tag says \"$tag\"."
+            exit 1
+          fi
+          echo "built APK versionName=$built"
+
+      - name: Stage the APK
+        run: |
+          set -euo pipefail
+          mkdir -p staging
+          cp app/build/outputs/apk/debug/app-debug.apk staging/debug.apk
+          ls -l staging
+
+      # The deliverable of a manual run, and the input of the publish job.
+      - name: Hand the APK over
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: staging
+          path: staging/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: publish
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Optional human gate on publishing: GitHub creates this environment on the first
+    # run, and adding required reviewers to it means no tag publishes until someone
+    # approves. Nothing here needs a secret any more - it is purely an approval point.
+    environment: release
+    # Only this job can write to the repository, and only to create the release.
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: staging
+          path: dist
+
+      # Nothing is signed or verified here: Gradle already signed the APK with the
+      # checked-in key and the build job pinned that certificate. This job checks out no
+      # code and reads no secret - it only renames, sums and uploads. Deliberately no
+      # `actions/checkout` either: this is the only job with write access, so it must not
+      # run anything from the pushed tag. Every `gh` call below therefore names the
+      # repository with --repo; without it gh tries to infer it from a git working tree
+      # and fails with "failed to run git: fatal: not a git repository".
+      - name: Name the asset
+        run: |
+          set -euo pipefail
+          apk="dist/screenlink-$GITHUB_REF_NAME-debug.apk"
+          mv dist/debug.apk "$apk"
+
+          # Sums over the shipped assets only. They attest the download; they are not a
+          # signature - whoever can replace the APK can replace this file too, and the
+          # signing key is public by design. This repository's releases are the anchor.
+          (cd dist && sha256sum ./*.apk > SHA256SUMS.txt)
+          ls -l dist
+
+      - name: Release notes
+        run: |
+          set -euo pipefail
+          assets=(dist/*.apk dist/SHA256SUMS.txt)
+          {
+            echo "Built by \`.github/workflows/release.yml\` from tag \`$GITHUB_REF_NAME\` (\`$GITHUB_SHA\`)."
+            echo
+            printf -- '- %s\n' "${assets[@]##*/}"
+            echo
+            echo "**Debug build**: debuggable and unminified - the variant the tests run against. No minified release build is published or built in CI: an unsigned release APK cannot be installed, and \`./gradlew :app:assembleRelease\` stays a local step."
+            echo
+            echo "Signed with the sideload key checked into \`keystore/\` on purpose, so this installs straight over an earlier install and keeps the pinned host keys and saved connections. That key is public by design and attests nothing about who built the APK - take it only from this repository's releases."
+            echo
+            echo "Copy it to the device and open it (allow installs from unknown sources), or \`adb install -r\`. Advanced dictation needs a Pixel with a locked bootloader; every other device falls back to its own recognizer automatically."
+          } > "$RUNNER_TEMP/notes.md"
+          cat "$RUNNER_TEMP/notes.md"
+
+      - name: Publish to the GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # No checkout in this job, so the repository is explicit, never inferred.
+          repo="$GITHUB_REPOSITORY"
+          assets=(dist/*.apk dist/SHA256SUMS.txt)
+          prerelease=()
+          case "$GITHUB_REF_NAME" in
+            *-*) prerelease=(--prerelease); echo "$GITHUB_REF_NAME carries a suffix: publishing as a prerelease." ;;
+          esac
+          if gh release view --repo "$repo" "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload --repo "$repo" "$GITHUB_REF_NAME" "${assets[@]}" --clobber
+          else
+            gh release create --repo "$repo" "$GITHUB_REF_NAME" "${assets[@]}" \
+              --verify-tag \
+              "${prerelease[@]}" \
+              --title "ScreenLink $GITHUB_REF_NAME" \
+              --notes-file "$RUNNER_TEMP/notes.md"
+          fi

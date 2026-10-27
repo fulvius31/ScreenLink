@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Spanish (es). Kept name-for-name in sync with values/strings.xml;
+     the parity unit test fails if a name is added on one side only. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">ScreenLink</string>
+
+    <!-- ================= shared actions ================= -->
+    <string name="action_back">Atrás</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_undo">Deshacer</string>
+    <string name="action_retry">Reintentar</string>
+    <string name="action_refresh">Actualizar</string>
+    <string name="action_more_actions">Más acciones</string>
+    <!-- La acción del aviso «N archivos en cola»: las filas de progreso ya no están
+         al final de la pantalla de archivos, así que el mensaje que provoca el
+         «¿dónde han ido mis archivos?» tiene que llevar la puerta hacia ellos. -->
+    <string name="action_view">Ver</string>
+
+    <!-- ================= language picker =================
+         Language names are shown in their own language in every locale, so a
+         user can always find the one they read. -->
+    <string name="language_menu">Idioma</string>
+    <string name="language_system">Predeterminado del sistema</string>
+    <string name="language_english">English</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_switch_title">¿Cambiar el idioma?</string>
+    <!-- Android 13 reinicia la aplicación cuando cambia su idioma, y con ello se
+         cae el servicio en primer plano y las sesiones SSH activas. -->
+    <plurals name="language_switch_body">
+        <item quantity="one">%1$d sesión de terminal está activa. Android reinicia la aplicación cuando cambia su idioma, así que esa sesión se desconectará. GNU Screen sigue en ejecución en el servidor: podrás volver a conectarla en cuanto se abra la aplicación.</item>
+        <item quantity="many">%1$d sesiones de terminal están activas. Android reinicia la aplicación cuando cambia su idioma, así que se desconectarán. GNU Screen sigue en ejecución en el servidor: podrás volver a conectarlas en cuanto se abra la aplicación.</item>
+        <item quantity="other">%1$d sesiones de terminal están activas. Android reinicia la aplicación cuando cambia su idioma, así que se desconectarán. GNU Screen sigue en ejecución en el servidor: podrás volver a conectarlas en cuanto se abra la aplicación.</item>
+    </plurals>
+    <string name="language_switch_confirm">Cambiar</string>
+
+    <!-- ================= home ================= -->
+    <string name="home_title">Conexiones</string>
+    <string name="home_tagline">Sesiones de GNU Screen, por SSH</string>
+    <plurals name="home_saved_count">
+        <item quantity="one">%1$d guardada · toca para conectar</item>
+        <item quantity="many">%1$d guardadas · toca para conectar</item>
+        <item quantity="other">%1$d guardadas · toca para conectar</item>
+    </plurals>
+    <string name="home_manage_keys">Gestionar claves SSH</string>
+    <string name="home_open_terminal">Abrir terminal</string>
+    <plurals name="home_running_sessions">
+        <item quantity="one">%1$d sesión en ejecución · toca para volver a entrar</item>
+        <item quantity="many">%1$d sesiones en ejecución · toca para volver a entrar</item>
+        <item quantity="other">%1$d sesiones en ejecución · toca para volver a entrar</item>
+    </plurals>
+    <string name="home_open_transfers">Copias de archivos</string>
+    <plurals name="home_running_transfers">
+        <item quantity="one">%1$d archivo todavía copiándose · toca para ver</item>
+        <item quantity="many">%1$d archivos todavía copiándose · toca para ver</item>
+        <item quantity="other">%1$d archivos todavía copiándose · toca para ver</item>
+    </plurals>
+    <plurals name="home_failed_transfers">
+        <item quantity="one">%1$d copia no terminó · toca para ver</item>
+        <item quantity="many">%1$d copias no terminaron · toca para ver</item>
+        <item quantity="other">%1$d copias no terminaron · toca para ver</item>
+    </plurals>
+    <string name="home_recent_sessions">Sesiones recientes</string>
+    <string name="home_mode_screen">GNU Screen</string>
+    <string name="home_mode_shell">Shell SSH</string>
+    <string name="home_remove_from_recents">Quitar de recientes</string>
+    <string name="home_search_hint">Buscar por nombre, host o usuario</string>
+    <string name="home_search">Buscar</string>
+    <string name="home_screen_label">screen · %1$s</string>
+    <string name="home_user_at_host">%1$s@%2$s</string>
+    <string name="home_empty_no_matches">Sin coincidencias</string>
+    <string name="home_empty_no_connections">Aún no hay conexiones</string>
+    <string name="home_empty_other_term">Prueba con otro término de búsqueda</string>
+    <string name="home_empty_add_server">Añade un servidor y conéctate a sus sesiones de GNU Screen en unos toques.</string>
+    <string name="home_add_connection">Añadir conexión</string>
+    <string name="home_deleted_snackbar">\"%1$s\" eliminada</string>
+
+    <!-- ================= connection overview ================= -->
+    <string name="overview_connection">Conexión</string>
+    <string name="overview_edit_connection">Editar conexión</string>
+    <string name="overview_connecting">Conectando con %1$s…</string>
+    <string name="overview_connecting_unknown">Conectando con el servidor…</string>
+    <string name="overview_could_not_connect">No se pudo conectar</string>
+    <string name="overview_open_named">Abrir \"%1$s\"</string>
+    <string name="overview_open_default_help">Conecta o crea la sesión de screen predeterminada</string>
+    <string name="overview_open">Abrir</string>
+    <string name="overview_screen_missing">GNU Screen no está instalado</string>
+    <string name="overview_screen_missing_help">"Instálalo en el servidor con:  sudo apt install screen  (o dnf install screen)."</string>
+    <string name="overview_sessions_title">Sesiones de Screen (%1$d)</string>
+    <string name="overview_new_session_name">Nombre de la sesión nueva</string>
+    <string name="overview_create">Crear</string>
+    <string name="overview_no_sessions">No hay sesiones de screen en ejecución</string>
+    <string name="overview_no_sessions_help">Crea una arriba y conéctate a ella.</string>
+    <string name="overview_plain_shell">Abrir un shell SSH simple</string>
+    <string name="overview_delete_session_title">¿Eliminar la sesión de screen?</string>
+    <string name="overview_delete_session_body">La sesión \"%1$s\" (%2$s) se terminará en el servidor. Esta acción no se puede deshacer.</string>
+    <string name="overview_ssh_port">SSH · puerto %1$d</string>
+    <string name="overview_socket">socket %1$s</string>
+    <string name="overview_detach">Desacoplar</string>
+    <string name="overview_attach">Acoplar</string>
+    <string name="state_attached">Acoplada</string>
+    <string name="state_detached">Desacoplada</string>
+
+    <!-- ================= connection form ================= -->
+    <string name="form_edit_title">Editar conexión</string>
+    <string name="form_new_title">Nueva conexión</string>
+    <string name="form_delete_connection">Eliminar conexión</string>
+    <string name="form_section_server">Servidor</string>
+    <string name="form_field_name">Nombre de la conexión</string>
+    <string name="form_field_username">Usuario</string>
+    <string name="form_field_host">Host / IP / dominio</string>
+    <string name="form_field_port">Puerto</string>
+    <string name="form_field_password">Contraseña</string>
+    <string name="form_toggle_password">Mostrar u ocultar la contraseña</string>
+    <string name="form_password_keep">Déjala vacía para mantener la contraseña guardada.</string>
+    <string name="form_password_remove">Quitar contraseña guardada</string>
+    <string name="form_password_cleared">La contraseña guardada se eliminará al guardar.</string>
+    <string name="form_section_screen">GNU Screen</string>
+    <string name="form_field_screen_session">Sesión de screen predeterminada (opcional)</string>
+    <string name="form_screen_session_help">Se reacopla cada vez que abres esta conexión.</string>
+    <string name="form_section_keys">Claves SSH</string>
+    <string name="form_keys_empty">Aún no hay claves guardadas. Añade una desde la pantalla de inicio (🔑 Claves SSH) y asígnala aquí para iniciar sesión sin contraseña.</string>
+    <string name="form_keys_help">Asigna una o más claves. Si hay contraseña, se usa como alternativa; déjala vacía para usar solo claves.</string>
+    <string name="form_save_changes">Guardar cambios</string>
+    <string name="form_delete_confirm_title">¿Eliminar esta conexión?</string>
+    <string name="form_delete_confirm_body">Se eliminan \"%1$s\" y sus credenciales guardadas. Las pestañas de terminal abiertas siguen en ejecución.</string>
+
+    <!-- ================= SSH keys list ================= -->
+    <string name="keys_title">Claves SSH</string>
+    <string name="keys_add">Añadir clave</string>
+    <string name="keys_empty_title">Aún no hay claves SSH</string>
+    <string name="keys_empty_body">Añade una clave privada SSH (PEM) y asígnala a una conexión para iniciar sesión sin contraseña.</string>
+    <string name="keys_protected">protegida con frase de paso</string>
+    <string name="keys_delete_key">Eliminar clave</string>
+    <string name="keys_delete_title">¿Eliminar la clave SSH?</string>
+    <string name="keys_delete_body">La clave \"%1$s\" se quitará de este dispositivo y se desvinculará de cualquier conexión que la use. Esta acción no se puede deshacer.</string>
+    <string name="algo_openssh">Clave OpenSSH</string>
+    <string name="algo_ec">Clave EC</string>
+    <string name="algo_dsa">Clave DSA</string>
+    <string name="algo_rsa">Clave RSA</string>
+    <string name="algo_pkcs8">Clave PKCS#8</string>
+    <string name="algo_unknown">Clave SSH</string>
+
+    <!-- ================= key form ================= -->
+    <string name="keyform_title">Añadir clave SSH</string>
+    <string name="keyform_field_name">Nombre de la clave</string>
+    <string name="keyform_field_private">Clave privada (PEM)</string>
+    <string name="keyform_private_help">"Pega la clave completa, p. ej. ----BEGIN OPENSSH PRIVATE KEY---- … "</string>
+    <string name="keyform_field_passphrase">Frase de paso de la clave (opcional)</string>
+    <string name="keyform_toggle_passphrase">Mostrar u ocultar la frase de paso</string>
+    <string name="keyform_field_public">Clave pública (.pub, opcional)</string>
+    <string name="keyform_public_help">Se guarda solo para identificar la clave; no se usa para autenticar.</string>
+    <string name="keyform_save">Guardar clave</string>
+
+    <!-- ================= validation + SSH errors ================= -->
+    <string name="err_connection_name">Ponle un nombre a esta conexión</string>
+    <string name="err_username">Escribe el usuario de SSH</string>
+    <string name="err_host">Escribe el host o la dirección IP</string>
+    <string name="err_port">Escribe un puerto válido (1–65535)</string>
+    <string name="err_key_name">Ponle un nombre a esta clave</string>
+    <!-- Los tres puntos sustituyen al tipo de clave en una cabecera PEM real: el
+         literal "..." es intencional y no debe convertirse en puntos suspensivos. -->
+    <string name="err_key_pem" tools:ignore="TypographyEllipsis">Pega una clave privada PEM (-----BEGIN ... PRIVATE KEY-----)</string>
+    <string name="err_key_encrypted">Esta clave privada está cifrada: escribe su frase de paso</string>
+    <string name="err_key_passphrase">Frase de paso incorrecta para esta clave privada</string>
+    <string name="err_key_invalid">Clave privada no válida: %1$s</string>
+    <string name="err_key_read">No se pudo leer la clave: %1$s</string>
+    <string name="err_host_not_found">Host no encontrado (%1$s)</string>
+    <string name="err_host_not_found_plain">Host no encontrado</string>
+    <string name="err_timeout">La conexión agotó el tiempo de espera</string>
+    <string name="err_auth_failed">Autenticación fallida: revisa el usuario y la contraseña</string>
+    <string name="err_refused">Conexión rechazada</string>
+    <string name="err_server_closed">Error de SSH: el servidor cerró la conexión</string>
+    <string name="err_connection_dropped">La conexión con el servidor se ha caído: comprueba la red e inténtalo de nuevo</string>
+    <string name="err_hostkey_changed">La clave del host cambió desde que se guardó esta conexión; posible intermediario (man-in-the-middle).\nRetírate y verifica la huella digital del servidor.</string>
+
+    <!-- primera conexión con un host: se pregunta ANTES de enviar credenciales -->
+    <string name="hostkey_first_contact_title">Primera conexión con %1$s</string>
+    <string name="hostkey_first_contact_body">Esta aplicación nunca ha visto a %1$s, así que nada en este dispositivo puede decirte si es de verdad la máquina a la que quieres llegar.\n\nLa huella digital de la clave del servidor es:\n%2$s\n\nComprueba ese valor contra el propio servidor (sus claves están en /etc/ssh) antes de confiar. Hasta que respondas, no se envía ninguna contraseña ni clave privada.</string>
+    <string name="hostkey_first_contact_connect">Confiar en esta clave y conectar</string>
+    <string name="hostkey_first_contact_cancel">Cancelar</string>
+    <string name="err_hostkey_not_confirmed">Detenido: no se confirmó la clave del host, así que no se envió ninguna contraseña ni clave</string>
+    <string name="err_ssh_failed">La conexión SSH falló</string>
+    <string name="err_unexpected">Error inesperado</string>
+    <string name="err_connection_missing">Conexión no encontrada o eliminada.</string>
+    <string name="session_closed">Conexión cerrada</string>
+
+    <!-- ================= overview snackbars ================= -->
+    <string name="snack_create_failed">No se pudo crear: %1$s</string>
+    <string name="snack_created">Sesión de screen \"%1$s\" creada</string>
+    <string name="snack_delete_failed">No se pudo eliminar: %1$s</string>
+    <string name="snack_deleted">Sesión %1$s eliminada</string>
+    <string name="snack_detach_failed">No se pudo desacoplar: %1$s</string>
+    <string name="snack_detached">%1$s desacoplada</string>
+
+    <!-- ================= copias de archivos (scp sobre la misma sesión SSH) =================
+         La cola cuenta cosas que el usuario no puede predecir: cada mensaje con
+         cantidad es un plural, nunca un "archivo(s)" escrito a mano. -->
+    <string name="files_title">Archivos</string>
+    <string name="overview_files">Copiar archivos</string>
+    <string name="files_mode_send">Enviar al servidor</string>
+    <string name="files_mode_receive">Copiar al dispositivo</string>
+    <string name="files_connection">Conexión</string>
+    <string name="files_no_connections_title">Aún no hay conexiones</string>
+    <string name="files_no_connections_body">Guarda primero un servidor en la pantalla de inicio y vuelve aquí para copiar archivos hacia él y desde él.</string>
+    <string name="files_no_connections_action">Añadir conexión</string>
+    <string name="files_shared_from_share">Compartido con ScreenLink</string>
+    <plurals name="files_shared_pending">
+        <item quantity="one">Preparando %1$d archivo compartido…</item>
+        <item quantity="many">Preparando %1$d archivos compartidos…</item>
+        <item quantity="other">Preparando %1$d archivos compartidos…</item>
+    </plurals>
+    <plurals name="files_shared_ready">
+        <item quantity="one">%1$d archivo listo para enviar</item>
+        <item quantity="many">%1$d archivos listos para enviar</item>
+        <item quantity="other">%1$d archivos listos para enviar</item>
+    </plurals>
+    <string name="files_files_to_send">Archivos a enviar</string>
+    <string name="files_no_files_yet">Aún no hay nada seleccionado</string>
+    <string name="files_add_files">Añadir archivos</string>
+    <string name="files_remove_file">Quitar %1$s de la lista</string>
+    <plurals name="files_files_selected">
+        <item quantity="one">%1$d archivo seleccionado</item>
+        <item quantity="many">%1$d archivos seleccionados</item>
+        <item quantity="other">%1$d archivos seleccionados</item>
+    </plurals>
+    <string name="files_remote_folder">Carpeta remota</string>
+    <string name="files_remote_folder_help">Toca una carpeta para abrirla y luego envía los archivos a ella. Un nombre que ya existe nunca se sobrescribe: pasa a ser \"nombre (1)\".</string>
+    <string name="files_fab_send">Enviar archivos</string>
+    <string name="files_fab_copy">Copiar al dispositivo</string>
+    <plurals name="files_fab_send_n">
+        <item quantity="one">Enviar %1$d archivo</item>
+        <item quantity="many">Enviar %1$d archivos</item>
+        <item quantity="other">Enviar %1$d archivos</item>
+    </plurals>
+    <plurals name="files_fab_copy_n">
+        <item quantity="one">Copiar %1$d archivo</item>
+        <item quantity="many">Copiar %1$d archivos</item>
+        <item quantity="other">Copiar %1$d archivos</item>
+    </plurals>
+    <string name="files_snack_no_files">Primero añade los archivos que quieras enviar</string>
+    <string name="files_snack_no_selection">Primero marca los archivos que quieras copiar</string>
+    <string name="files_new_folder">Carpeta nueva</string>
+    <string name="files_new_folder_title">Crear una carpeta en %1$s</string>
+    <string name="files_new_folder_hint">Nombre de la carpeta</string>
+    <string name="files_new_folder_action">Crear</string>
+    <string name="files_folder_created">Carpeta \"%1$s\" creada</string>
+    <string name="files_folder_create_failed">No se pudo crear la carpeta: %1$s</string>
+    <string name="files_folder_name_invalid">Usa un nombre de carpeta sin \"/\"</string>
+    <string name="files_device_folder">Carpeta del dispositivo</string>
+    <string name="files_choose_folder">Elegir carpeta</string>
+    <string name="files_device_folder_help">Los archivos copiados se guardan aquí. La aplicación solo accede a la carpeta que elijas.</string>
+    <string name="files_no_device_folder">Aún no elegiste ninguna carpeta</string>
+    <!-- La carpeta SÍ está elegida, el proveedor solo no dice su nombre: nunca
+         afirmar que el usuario no ha elegido ninguna. -->
+    <string name="files_device_folder_unnamed">Carpeta seleccionada</string>
+    <string name="files_tap_to_select">Toca los archivos para seleccionarlos.</string>
+    <string name="files_empty_dir">Esta carpeta está vacía</string>
+    <string name="files_search_hint">Buscar en esta carpeta</string>
+    <string name="files_search_clear">Borrar la búsqueda</string>
+    <string name="files_search_reset">Borrar búsqueda</string>
+    <string name="files_search_matches">Mostrando %1$d de %2$d</string>
+    <string name="files_search_no_matches">Nada en esta carpeta coincide con \"%1$s\"</string>
+    <string name="files_browse_idle">Elige una conexión para recorrer sus carpetas</string>
+    <string name="files_connecting">Abriendo la carpeta…</string>
+    <string name="files_browse_up">Subir una carpeta</string>
+    <string name="files_browser_error">No se pudo abrir la carpeta</string>
+    <string name="files_transfers">Copias</string>
+    <!-- La puerta de la barra superior hacia la pantalla de copias. El número es un
+         distintivo junto al icono, así que esta frase solo dice QUÉ abre el botón. -->
+    <string name="files_open_transfers">Ver las copias</string>
+    <!-- La misma puerta leída en voz alta. El distintivo es un número suelto, así que
+         TalkBack diría «Ver las copias, 3» (y «99 más» al pasar el tope) sin decir qué
+         cuenta el número: el número y su significado pasan al rótulo del propio icono. -->
+    <string name="files_open_transfers_desc">Ver las copias: %1$s</string>
+    <plurals name="files_badge_active">
+        <item quantity="one">%1$d copia en curso</item>
+        <item quantity="many">%1$d copias en curso</item>
+        <item quantity="other">%1$d copias en curso</item>
+    </plurals>
+    <plurals name="files_badge_failed">
+        <item quantity="one">%1$d copia fallida</item>
+        <item quantity="many">%1$d copias fallidas</item>
+        <item quantity="other">%1$d copias fallidas</item>
+    </plurals>
+    <string name="files_transfers_running_hint">Las copias siguen aunque salgas de esta pantalla.</string>
+    <string name="files_clear_finished">Limpiar terminadas</string>
+    <!-- Las dos bandas de la pantalla de copias. Las filas se reordenan (lo que se
+         está copiando primero, las terminadas más recientes arriba), así que la
+         cabecera debe decir a qué banda pertenece cada fila. -->
+    <plurals name="transfers_section_active">
+        <item quantity="one">%1$d copiándose todavía</item>
+        <item quantity="many">%1$d copiándose todavía</item>
+        <item quantity="other">%1$d copiándose todavía</item>
+    </plurals>
+    <plurals name="transfers_section_finished">
+        <item quantity="one">%1$d terminada</item>
+        <item quantity="many">%1$d terminadas</item>
+        <item quantity="other">%1$d terminadas</item>
+    </plurals>
+    <!-- La línea viva bajo el título: «3 en curso · 2 terminadas». -->
+    <plurals name="transfers_count_active">
+        <item quantity="one">%1$d en curso</item>
+        <item quantity="many">%1$d en curso</item>
+        <item quantity="other">%1$d en curso</item>
+    </plurals>
+    <plurals name="transfers_count_finished">
+        <item quantity="one">%1$d terminada</item>
+        <item quantity="many">%1$d terminadas</item>
+        <item quantity="other">%1$d terminadas</item>
+    </plurals>
+    <string name="transfers_empty_title">Todavía no hay copias</string>
+    <string name="transfers_empty_body">Los archivos que compartas a ScreenLink, o que elijas en la pantalla de archivos, aparecen aquí mientras se copian. Las copias siguen aunque cierres esta pantalla.</string>
+    <string name="files_cancel_transfer">Cancelar la copia</string>
+    <string name="files_retry_transfer">Reintentar esta copia</string>
+    <string name="files_status_queued">En espera</string>
+    <string name="files_status_completed">Hecha</string>
+    <string name="files_status_failed">Falló</string>
+    <string name="files_status_cancelled">Cancelada</string>
+    <string name="files_status_reconnecting">Reconectando con el servidor…</string>
+    <string name="files_progress_sizes">%1$s de %2$s</string>
+    <string name="files_progress_size_only">%1$s copiados</string>
+    <string name="files_progress_time_left">queda %1$s</string>
+    <string name="files_progress_eta_unknown">calculando…</string>
+    <plurals name="files_snack_upload_queued">
+        <item quantity="one">%1$d archivo en cola para enviar</item>
+        <item quantity="many">%1$d archivos en cola para enviar</item>
+        <item quantity="other">%1$d archivos en cola para enviar</item>
+    </plurals>
+    <plurals name="files_snack_download_queued">
+        <item quantity="one">%1$d archivo en cola para copiar aquí</item>
+        <item quantity="many">%1$d archivos en cola para copiar aquí</item>
+        <item quantity="other">%1$d archivos en cola para copiar aquí</item>
+    </plurals>
+    <string name="files_snack_no_connection">Primero elige una conexión</string>
+    <string name="files_snack_no_folder">Primero elige una carpeta del dispositivo</string>
+    <!-- El botón de enviar se activa con la lista de archivos, así que la carpeta
+         remota todavía puede faltar (cargando o no se pudo abrir). -->
+    <string name="files_snack_no_remote_folder">Abre primero la carpeta remota de destino</string>
+    <string name="files_transfer_cancelled">Copia cancelada</string>
+    <!-- Un solo toque para un lote que salió mal: cancelar diez filas de una en una
+         no es algo razonable que pedir al usuario. -->
+    <string name="files_transfers_cancel_all">Detener todo</string>
+    <string name="files_transfers_cancelled_all">Todas las copias detenidas</string>
+    <!-- Un uso compartido sin archivo legible (una carpeta, un texto suelto) debe
+         decirlo en vez de abrir una lista vacía en silencio. -->
+    <string name="files_share_unsupported">Ese uso compartido no incluía ningún archivo que ScreenLink pueda copiar</string>
+    <plurals name="files_share_partial">
+        <item quantity="one">%1$d archivo compartido no se pudo leer</item>
+        <item quantity="many">%1$d archivos compartidos no se pudieron leer</item>
+        <item quantity="other">%1$d archivos compartidos no se pudieron leer</item>
+    </plurals>
+
+    <!-- ================= errores de copia ================= -->
+    <string name="err_transfer_permission">Sin permiso para escribir ahí: revisa los permisos de la carpeta en el servidor</string>
+    <string name="err_transfer_not_found">El archivo o la carpeta ya no existe</string>
+    <string name="err_transfer_connection_lost">La conexión se cayó durante la copia</string>
+    <string name="err_transfer_unsupported">El servidor no admite esa operación</string>
+    <string name="err_transfer_sftp_unavailable">Este servidor no admite SFTP, así que no se pueden copiar archivos</string>
+    <string name="err_transfer_cancelled">Copia cancelada</string>
+    <!-- La carpeta del dispositivo ya tiene ese nombre: la cola lo renombra, así que
+         esto solo aparece cuando el proveedor responde con un archivo ya existente. -->
+    <string name="err_transfer_exists">Ya hay un archivo llamado \"%1$s\" en la carpeta elegida</string>
+    <string name="err_folder_not_writable">No se pudo escribir \"%1$s\" en la carpeta elegida: vuelve a elegir la carpeta o usa una que permita escribir</string>
+    <!-- El selector dio un permiso que solo vive mientras vive el proceso: la copia
+         arranca normal y solo se rompe tras un reinicio, así que hay que avisar AHORA. -->
+    <string name="files_error_grant_not_persisted">El sistema no quiso guardar el permiso de lo elegido: la copia funciona ahora pero puede fallar tras un reinicio</string>
+    <string name="err_transfer_failed">La copia ha fallado: %1$s</string>
+    <!-- Abrir una carpeta no es una copia, y solo LEE: el mismo código SFTP hay que
+         redactarlo distinto o el usuario se pone a arreglar permisos que no usaba. -->
+    <string name="err_browse_permission">Sin permiso para abrir esa carpeta: revisa sus permisos en el servidor</string>
+    <string name="err_browse_connection_lost">La conexión se cayó al abrir la carpeta</string>
+    <string name="err_browse_failed">La carpeta no se abrió: %1$s</string>
+
+    <!-- ================= terminal screen ================= -->
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_no_sessions">sin sesiones</string>
+    <plurals name="terminal_session_count">
+        <item quantity="one">%1$d sesión</item>
+        <item quantity="many">%1$d sesiones</item>
+        <item quantity="other">%1$d sesiones</item>
+    </plurals>
+    <string name="terminal_close">Cerrar terminal (las sesiones siguen en ejecución)</string>
+    <string name="terminal_opening">Abriendo shell SSH…</string>
+    <string name="terminal_could_not_open">No se pudo abrir el terminal</string>
+    <string name="terminal_remote_closed">El lado remoto cerró la conexión.</string>
+    <string name="terminal_back_to_sessions">Volver a las sesiones</string>
+    <string name="terminal_live">En vivo</string>
+    <string name="terminal_live_desc">Volver a la salida en vivo</string>
+    <string name="terminal_show_keyboard">Mostrar teclado</string>
+    <!-- Modo copia de GNU Screen: el historial del servidor en una sesion screen. -->
+    <string name="terminal_history_off">Historial</string>
+    <string name="terminal_history_on">Historial activo</string>
+    <string name="terminal_history_hint">Historial de screen · escribir te devuelve al prompt</string>
+    <string name="terminal_add_session">Abrir otra sesión</string>
+    <string name="terminal_close_session">Cerrar sesión</string>
+    <string name="tab_screen">Screen</string>
+    <string name="connection_fallback">Conexión %1$d</string>
+
+    <!-- ================= foreground-service notification ================= -->
+    <string name="notif_channel">Terminales de ScreenLink</string>
+    <string name="notif_connecting">Conectando…</string>
+    <string name="notif_tap_to_open">Toca para abrir</string>
+    <string name="notif_disconnect">Desconectar</string>
+    <plurals name="notif_running">
+        <item quantity="one">ScreenLink · %1$d sesión</item>
+        <item quantity="many">ScreenLink · %1$d sesiones</item>
+        <item quantity="other">ScreenLink · %1$d sesiones</item>
+    </plurals>
+    <!-- El canal propio de la cola de copias: una subida larga tiene que ser visible
+         en la sombra (es lo que mantiene la copia viva) y la sombra es también la
+         única forma de detener un lote cuando la pantalla ya no está. -->
+    <string name="notif_transfer_channel">Copias de archivos de ScreenLink</string>
+    <plurals name="notif_transfer_active">
+        <item quantity="one">ScreenLink · copiando %1$d archivo</item>
+        <item quantity="many">ScreenLink · copiando %1$d archivos</item>
+        <item quantity="other">ScreenLink · copiando %1$d archivos</item>
+    </plurals>
+
+    <!-- ================= terminal keyboard =================
+         Labels are resources so a locale can shorten them to fit the fixed
+         key weights; the command each key SENDS is never localized. -->
+    <string name="key_ctrl_c">Ctrl-C (Interrumpir)</string>
+    <string name="key_ctrl_d">Ctrl-D (Fin de la entrada)</string>
+    <string name="key_ctrl_z">Ctrl-Z (Suspender)</string>
+    <string name="key_ctrl_backslash">Ctrl-Barra invertida (Salir)</string>
+    <string name="key_backspace">Retroceso</string>
+    <string name="key_enter">Intro</string>
+    <string name="key_letters_toggle">Mostrar u ocultar las letras</string>
+    <string name="key_hide">Ocultar teclado</string>
+    <string name="key_label_shift">MAYÚS</string>
+    <string name="key_label_caps">BLOQ</string>
+    <string name="key_label_home">INICIO</string>
+    <string name="key_label_end">FIN</string>
+    <string name="key_label_pgup">REPAG</string>
+    <string name="key_label_pgdn">AVPAG</string>
+    <string name="key_label_up">ARRIBA</string>
+    <string name="key_label_down">ABAJO</string>
+    <string name="key_label_left">IZQ</string>
+    <string name="key_label_right">DER</string>
+    <string name="key_label_detach">SEPARAR</string>
+    <string name="key_label_copy">COPIAR</string>
+    <string name="key_label_paste">PEGAR</string>
+    <string name="key_label_del">SUPR</string>
+    <string name="key_label_enter">INTRO</string>
+    <string name="key_label_space">espacio</string>
+    <!-- ================= dictation (speech-to-text) ================= -->
+    <string name="key_dictate">DICTAR</string>
+    <string name="key_dictate_stop">Dejar de dictar</string>
+    <string name="dictate_starting">Preparando el micrófono…</string>
+    <string name="dictate_finishing">Esperando la última palabra…</string>
+    <string name="dictate_insert">Insertar lo escuchado</string>
+    <string name="dictate_discard">Descartar la dictación</string>
+    <string name="dictate_dismiss">Cerrar el aviso</string>
+    <string name="dictate_open_settings">Abrir los ajustes de la aplicación</string>
+    <string name="dictate_error_unavailable">Este dispositivo no tiene reconocimiento de voz, así que no se puede dictar</string>
+    <string name="dictate_error_no_speech">No se ha oído ninguna voz: toca el micrófono y habla</string>
+    <string name="dictate_error_no_match">No se ha entendido: inténtalo de nuevo</string>
+    <string name="dictate_error_audio">El micrófono no ha funcionado o lo está usando otra aplicación</string>
+    <string name="dictate_error_network">El reconocimiento de voz necesita internet y no ha podido conectar</string>
+    <string name="dictate_error_server">El reconocimiento de voz ha dejado de responder</string>
+    <string name="dictate_error_client">No se ha podido empezar a dictar en este dispositivo</string>
+    <string name="dictate_error_busy">Otra aplicación está usando el reconocimiento de voz ahora mismo</string>
+    <string name="dictate_error_permission">Dictar necesita el micrófono: permíteselo</string>
+    <string name="dictate_error_permission_settings">El acceso al micrófono está bloqueado: permítelo en Ajustes</string>
+    <string name="dictate_error_language">Este dispositivo no tiene modelo de voz para el idioma de la aplicación</string>
+    <string name="dictate_error_unknown">La dictación se ha detenido</string>
+    <!-- Modo avanzado: el reconocedor GenAI de ML Kit. La barra nombra el motor que
+         está ESCUCHANDO de verdad, porque la historia de privacidad cambia entre uno
+         y otro, y el primer intento en un dispositivo nuevo descarga el modelo. -->
+    <string name="dictate_downloading">Descargando el modelo de voz… %1$s hasta ahora</string>
+    <string name="dictate_listening_mode">Escuchando… · %1$s</string>
+    <string name="dictate_backend_advanced">Gemini Nano, en el dispositivo</string>
+    <string name="dictate_backend_model">modelo en el dispositivo</string>
+    <string name="dictate_backend_device">reconocedor del dispositivo</string>
+    <string name="dictate_error_no_storage">No queda almacenamiento suficiente para el modelo de voz</string>
+    <string name="dictate_error_needs_update">El servicio de modelos del dispositivo necesita una actualización del sistema</string>
+
+
+    <!-- Spoken names for symbol keys: a bare glyph is announced inconsistently
+         by screen readers, so every symbol key has a word for it. -->
+    <string name="sym_exclamation">signo de exclamación</string>
+    <string name="sym_at">arroba</string>
+    <string name="sym_hash">almohadilla</string>
+    <string name="sym_dollar">dólar</string>
+    <string name="sym_percent">porcentaje</string>
+    <string name="sym_caret">acento circunflejo</string>
+    <string name="sym_ampersand">y comercial</string>
+    <string name="sym_asterisk">asterisco</string>
+    <string name="sym_open_parenthesis">paréntesis de apertura</string>
+    <string name="sym_close_parenthesis">paréntesis de cierre</string>
+    <string name="sym_minus">menos</string>
+    <string name="sym_underscore">guion bajo</string>
+    <string name="sym_equals">igual</string>
+    <string name="sym_plus">más</string>
+    <string name="sym_open_bracket">corchete de apertura</string>
+    <string name="sym_close_bracket">corchete de cierre</string>
+    <string name="sym_open_brace">llave de apertura</string>
+    <string name="sym_close_brace">llave de cierre</string>
+    <string name="sym_semicolon">punto y coma</string>
+    <string name="sym_colon">dos puntos</string>
+    <string name="sym_apostrophe">apóstrofo</string>
+    <string name="sym_quote">comillas</string>
+    <string name="sym_comma">coma</string>
+    <string name="sym_less_than">menor que</string>
+    <string name="sym_period">punto</string>
+    <string name="sym_greater_than">mayor que</string>
+    <string name="sym_slash">barra</string>
+    <string name="sym_backslash">barra invertida</string>
+    <string name="sym_pipe">barra vertical</string>
+    <string name="sym_backtick">acento grave</string>
+    <string name="sym_tilde">virgulilla</string>
+    <string name="sym_question">signo de interrogación</string>
+    <string name="sym_space">espacio</string>
+</resources>

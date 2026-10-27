@@ -1,0 +1,49 @@
+ScreenLink
+Copyright (c) 2026 Sangiorgi S.r.l.
+
+This product includes software developed at Sangiorgi S.r.l.
+
+
+Third-party attributions
+========================
+
+Vendored terminal code (app/src/main/java/com/sangiorgisrl/screenlink/terminal/)
+--------------------------------------------------------------------------------
+
+Portions of this product — the packages
+`com.sangiorgisrl.screenlink.terminal.emulator`,
+`com.sangiorgisrl.screenlink.terminal.view` and
+`com.sangiorgisrl.screenlink.terminal.view.textselection` — are derived from the
+`terminal-emulator` and `terminal-view` modules of the Termux terminal emulator
+(https://github.com/termux/termux-app), tag `v0.118.0`,
+Copyright (c) the Termux contributors, and are used under the Apache License,
+Version 2.0.
+
+The vendored code was moved into this application's own package namespace and
+modified for use over an SSH transport instead of a local pseudo-terminal; it
+has since been rewritten in Kotlin (the original sources were Java). It remains
+a work derived from the upstream Apache-2.0 code, and the modifications are
+covered by the same Apache License, Version 2.0. See the `package-info.java`
+files in those packages, and the notice at the top of each vendored source
+file, for what specifically was changed.
+
+You can obtain a copy of the Apache License, Version 2.0 at
+http://www.apache.org/licenses/LICENSE-2.0 (the full text is also shipped in the
+`LICENSE` file of this repository).
+
+
+Bundled libraries
+-----------------
+
+The application links against the following libraries, each under its own licence;
+the licences below are not modified or re-licensed by this project:
+
+  * AndroidX / Kotlin standard library / kotlinx-coroutines — Apache License 2.0
+  * Room (AndroidX)                                                  — Apache 2.0
+  * JCraft JSch, maintained fork `com.github.mwiede:jsch`            — BSD-3-Clause
+  * Bouncy Castle `bcprov-jdk18on`                                   — MIT-like (BC)
+  * JUnit 5 (Jupiter) — test only, not shipped                       — EPL-2.0
+
+The Material text-selection handle drawables under
+`app/src/main/res/drawable/text_select_handle_*` follow the Android Open Source
+Project material design assets (Apache License 2.0).

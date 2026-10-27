@@ -1,0 +1,75 @@
+# Gradle / Kotlin build state
+.gradle/
+.kotlin/
+build/
+app/build/
+
+# Local configuration (SDK paths, etc.) - never commit machine-specific paths
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Logs & OS junk
+*.log
+.DS_Store
+*.hprof
+
+# Built application files. The APKs this project ships are copied out of
+# app/build/outputs/apk/debug by hand (Nextcloud folder), so no binary belongs in
+# the repo: a 22 MB debug build in a public history is noise, and a signed one is
+# a target. `app/debug` / `app/release` are where Android Studio drops exported
+# builds when someone uses Build > Generate.
+*.apk
+*.aab
+*.aar
+*.ap_
+*.dex
+*.class
+app/debug/
+app/release/
+
+# Signing material and injected secrets - none of this may ever be pushed.
+*.jks
+*.keystore
+*.p12
+*.pk8
+*.pem
+keystore.properties
+signing.properties
+secrets.properties
+*.env
+
+# The single deliberate exception: keystore/sideload.p12 signs the debug APK this project
+# publishes, and its only job is a signature that never changes, so a new release installs
+# over the old one instead of demanding an uninstall (which would cost the pinned host keys
+# and saved connections). It is a throwaway key, public by design, and signs nothing else -
+# every real signing key still matches the rules above.
+!keystore/sideload.p12
+google-services.json
+
+# Internal working notes. They stay on disk and keep being written to, but they
+# are not part of what the repo publishes: `progress.md` is the per-session dev
+# log (build identities, sha256s, raw bug reports) and the policy review is an
+# unofficial pre-submission assessment.
+progress.md
+PLAY_STORE_POLICY_REVIEW.md
+ADVERSARIAL_REVIEW.md
+
+# Unredacted screenshots. The captures in `screenshots/` are what the README (and a
+# future Play listing) publish: LAN addresses, user@host lines, the pinned host-key
+# fingerprint and any path carrying a username are blocked out. The originals stay on
+# disk for re-cropping, but they name real machines, so they never enter the repo.
+screenshots/raw/
+
+# CI staging folder for the APKs a tag release publishes (release.yml). The
+# *.apk rule above already covers the files themselves; this keeps the folder out
+# of `git status` when the workflow is exercised locally.
+dist/
+
+# Project-specific: the log file the build gate writes
+TODO

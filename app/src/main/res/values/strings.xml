@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">ScreenLink</string>
+
+    <!-- ================= shared actions ================= -->
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_retry">Try again</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_more_actions">More actions</string>
+    <!-- The snackbar action on "N files queued": the progress rows are no longer at
+         the bottom of the Files screen, so the message that raises "where did my
+         files go?" has to carry the door to them. -->
+    <string name="action_view">View</string>
+
+    <!-- ================= language picker =================
+         Language names are shown in their own language in every locale, so a
+         user can always find the one they read. -->
+    <string name="language_menu">Language</string>
+    <string name="language_system">System default</string>
+    <string name="language_english">English</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_switch_title">Switch language?</string>
+    <!-- Android 13+ restarts the app when its language changes, which drops the
+         foreground service and with it the live SSH sessions. Say so up front. -->
+    <plurals name="language_switch_body">
+        <item quantity="one">%1$d terminal session is live. Android restarts the app when its language changes, so that session will be disconnected. GNU Screen keeps running on the server, so you can re-attach as soon as the app is back.</item>
+        <item quantity="other">%1$d terminal sessions are live. Android restarts the app when its language changes, so they will be disconnected. GNU Screen keeps running on the server, so you can re-attach as soon as the app is back.</item>
+    </plurals>
+    <string name="language_switch_confirm">Switch</string>
+
+    <!-- ================= home ================= -->
+    <string name="home_title">Connections</string>
+    <string name="home_tagline">GNU Screen sessions, over SSH</string>
+    <plurals name="home_saved_count">
+        <item quantity="one">%1$d saved · tap to connect</item>
+        <item quantity="other">%1$d saved · tap to connect</item>
+    </plurals>
+    <string name="home_manage_keys">Manage SSH keys</string>
+    <string name="home_open_terminal">Open terminal</string>
+    <plurals name="home_running_sessions">
+        <item quantity="one">%1$d session running · tap to re-enter</item>
+        <item quantity="other">%1$d sessions running · tap to re-enter</item>
+    </plurals>
+    <!-- Same idea as the live-session card: a copy keeps running after the Files
+         screen is gone, so Home has to say so and offer the way back to it. -->
+    <string name="home_open_transfers">File copies</string>
+    <plurals name="home_running_transfers">
+        <item quantity="one">%1$d file still copying · tap to watch</item>
+        <item quantity="other">%1$d files still copying · tap to watch</item>
+    </plurals>
+    <!-- Nothing is moving any more, but a copy failed: the card has to stay up,
+         or the user leaves believing the whole batch arrived. -->
+    <plurals name="home_failed_transfers">
+        <item quantity="one">%1$d copy did not finish · tap to see</item>
+        <item quantity="other">%1$d copies did not finish · tap to see</item>
+    </plurals>
+    <string name="home_recent_sessions">Recent sessions</string>
+    <string name="home_mode_screen">GNU Screen</string>
+    <string name="home_mode_shell">SSH shell</string>
+    <string name="home_remove_from_recents">Remove from recents</string>
+    <string name="home_search_hint">Search by name, host or user</string>
+    <string name="home_search">Search</string>
+    <string name="home_screen_label">screen · %1$s</string>
+    <string name="home_user_at_host">%1$s@%2$s</string>
+    <string name="home_empty_no_matches">No matches</string>
+    <string name="home_empty_no_connections">No connections yet</string>
+    <string name="home_empty_other_term">Try a different search term</string>
+    <string name="home_empty_add_server">Add a server and attach to its GNU Screen sessions in a few taps.</string>
+    <string name="home_add_connection">Add connection</string>
+    <string name="home_deleted_snackbar">\"%1$s\" deleted</string>
+
+    <!-- ================= connection overview ================= -->
+    <string name="overview_connection">Connection</string>
+    <string name="overview_edit_connection">Edit connection</string>
+    <string name="overview_connecting">Connecting to %1$s…</string>
+    <string name="overview_connecting_unknown">Connecting to server…</string>
+    <string name="overview_could_not_connect">Could not connect</string>
+    <string name="overview_open_named">Open \"%1$s\"</string>
+    <string name="overview_open_default_help">Attaches or creates the default screen session</string>
+    <string name="overview_open">Open</string>
+    <string name="overview_screen_missing">GNU Screen is not installed</string>
+    <string name="overview_screen_missing_help">"Install it on the server with:  sudo apt install screen  (or dnf install screen)."</string>
+    <string name="overview_sessions_title">Screen sessions (%1$d)</string>
+    <string name="overview_new_session_name">New session name</string>
+    <string name="overview_create">Create</string>
+    <string name="overview_no_sessions">No screen sessions running</string>
+    <string name="overview_no_sessions_help">Create one above, then attach to it.</string>
+    <string name="overview_plain_shell">Open a plain SSH shell</string>
+    <string name="overview_delete_session_title">Delete screen session?</string>
+    <string name="overview_delete_session_body">Session \"%1$s\" (%2$s) will be terminated on the server. This cannot be undone.</string>
+    <string name="overview_ssh_port">SSH · port %1$d</string>
+    <string name="overview_socket">socket %1$s</string>
+    <string name="overview_detach">Detach</string>
+    <string name="overview_attach">Attach</string>
+    <string name="state_attached">Attached</string>
+    <string name="state_detached">Detached</string>
+
+    <!-- ================= connection form ================= -->
+    <string name="form_edit_title">Edit connection</string>
+    <string name="form_new_title">New connection</string>
+    <string name="form_delete_connection">Delete connection</string>
+    <string name="form_section_server">Server</string>
+    <string name="form_field_name">Connection name</string>
+    <string name="form_field_username">Username</string>
+    <string name="form_field_host">Host / IP / domain</string>
+    <string name="form_field_port">Port</string>
+    <string name="form_field_password">Password</string>
+    <string name="form_toggle_password">Toggle password visibility</string>
+    <string name="form_password_keep">Leave empty to keep the saved password.</string>
+    <string name="form_password_remove">Remove saved password</string>
+    <string name="form_password_cleared">Saved password will be removed when you save.</string>
+    <string name="form_section_screen">GNU Screen</string>
+    <string name="form_field_screen_session">Default screen session (optional)</string>
+    <string name="form_screen_session_help">Reattached every time you open this connection.</string>
+    <string name="form_section_keys">SSH keys</string>
+    <string name="form_keys_empty">No saved keys yet. Add one from the Home screen (🔑 SSH keys), then attach it here for passwordless login.</string>
+    <string name="form_keys_help">Attach one or more keys. If a password is set it is used as a fallback; leave it empty to use keys only.</string>
+    <string name="form_save_changes">Save changes</string>
+    <string name="form_delete_confirm_title">Delete this connection?</string>
+    <string name="form_delete_confirm_body">\"%1$s\" and its saved credentials are removed. Live terminal tabs already open keep running.</string>
+
+    <!-- ================= SSH keys list ================= -->
+    <string name="keys_title">SSH keys</string>
+    <string name="keys_add">Add key</string>
+    <string name="keys_empty_title">No SSH keys yet</string>
+    <string name="keys_empty_body">Add an SSH private key (PEM) and attach it to a connection to log in without a password.</string>
+    <string name="keys_protected">protected with a passphrase</string>
+    <string name="keys_delete_key">Delete key</string>
+    <string name="keys_delete_title">Delete SSH key?</string>
+    <string name="keys_delete_body">Key \"%1$s\" will be removed from this device and unlinked from any connection that uses it. This cannot be undone.</string>
+    <string name="algo_openssh">OpenSSH key</string>
+    <string name="algo_ec">EC key</string>
+    <string name="algo_dsa">DSA key</string>
+    <string name="algo_rsa">RSA key</string>
+    <string name="algo_pkcs8">PKCS#8 key</string>
+    <string name="algo_unknown">SSH key</string>
+
+    <!-- ================= key form ================= -->
+    <string name="keyform_title">Add SSH key</string>
+    <string name="keyform_field_name">Key name</string>
+    <string name="keyform_field_private">Private key (PEM)</string>
+    <string name="keyform_private_help">"Paste the whole key, e.g. ----BEGIN OPENSSH PRIVATE KEY---- … "</string>
+    <string name="keyform_field_passphrase">Key passphrase (optional)</string>
+    <string name="keyform_toggle_passphrase">Toggle passphrase</string>
+    <string name="keyform_field_public">Public key (.pub, optional)</string>
+    <string name="keyform_public_help">Saved only to help you identify the key; not used for auth.</string>
+    <string name="keyform_save">Save key</string>
+
+    <!-- ================= validation + SSH errors ================= -->
+    <string name="err_connection_name">Give this connection a name</string>
+    <string name="err_username">Enter the SSH username</string>
+    <string name="err_host">Enter the host or IP address</string>
+    <string name="err_port">Enter a valid port (1–65535)</string>
+    <string name="err_key_name">Give this key a name</string>
+    <!-- The three dots stand for the key type inside a real PEM header, so the
+         literal "..." is intentional and must not become an ellipsis. -->
+    <string name="err_key_pem" tools:ignore="TypographyEllipsis">Paste a PEM private key (-----BEGIN ... PRIVATE KEY-----)</string>
+    <string name="err_key_encrypted">This private key is encrypted - enter its passphrase</string>
+    <string name="err_key_passphrase">Wrong passphrase for this private key</string>
+    <string name="err_key_invalid">Invalid private key: %1$s</string>
+    <string name="err_key_read">Could not read the key: %1$s</string>
+    <string name="err_host_not_found">Host not found (%1$s)</string>
+    <string name="err_host_not_found_plain">Host not found</string>
+    <string name="err_timeout">Connection timed out</string>
+    <string name="err_auth_failed">Authentication failed — check the username and password</string>
+    <string name="err_refused">Connection refused</string>
+    <string name="err_server_closed">SSH error: server closed the connection</string>
+    <string name="err_connection_dropped">The connection to the server dropped — check the network and try again</string>
+    <string name="err_hostkey_changed">Host key changed since this connection was saved - possible man-in-the-middle.\nBack out and verify the server\'s fingerprint.</string>
+
+    <!-- first-contact host key confirmation (trust-on-first-use, asked BEFORE any
+         credential is sent, so it belongs next to the other host-key wording) -->
+    <string name="hostkey_first_contact_title">First connection to %1$s</string>
+    <string name="hostkey_first_contact_body">This app has never seen %1$s before, so nothing on this device can tell you whether it is really the machine you mean to reach.\n\nThe server\'s key fingerprint is:\n%2$s\n\nCheck that value against the server itself - its host keys live in /etc/ssh - before you trust it. Until you answer, no password and no private key is sent.</string>
+    <string name="hostkey_first_contact_connect">Trust this key and connect</string>
+    <string name="hostkey_first_contact_cancel">Cancel</string>
+    <string name="err_hostkey_not_confirmed">Stopped: the server\'s host key was not confirmed, so no password or key was sent</string>
+    <string name="err_ssh_failed">SSH connection failed</string>
+    <string name="err_unexpected">Unexpected error</string>
+    <string name="err_connection_missing">Connection not found or deleted.</string>
+    <string name="session_closed">Connection closed</string>
+
+    <!-- ================= overview snackbars ================= -->
+    <string name="snack_create_failed">Failed to create: %1$s</string>
+    <string name="snack_created">Created screen session \"%1$s\"</string>
+    <string name="snack_delete_failed">Failed to delete: %1$s</string>
+    <string name="snack_deleted">Deleted session %1$s</string>
+    <string name="snack_detach_failed">Failed to detach: %1$s</string>
+    <string name="snack_detached">Detached %1$s</string>
+
+    <!-- ================= file transfer (scp-style copies over the same SSH session) =================
+         The queue counts things the user cannot predict, so every count message is
+         a plural rather than a hand-built "file(s)". -->
+    <string name="files_title">Files</string>
+    <string name="overview_files">Copy files</string>
+    <string name="files_mode_send">Send to server</string>
+    <string name="files_mode_receive">Copy to device</string>
+    <string name="files_connection">Connection</string>
+    <string name="files_no_connections_title">No connections yet</string>
+    <string name="files_no_connections_body">Save a server on the Home screen first, then come back to copy files to and from it.</string>
+    <string name="files_no_connections_action">Add connection</string>
+    <string name="files_shared_from_share">Shared with ScreenLink</string>
+    <plurals name="files_shared_pending">
+        <item quantity="one">Preparing %1$d shared file…</item>
+        <item quantity="other">Preparing %1$d shared files…</item>
+    </plurals>
+    <plurals name="files_shared_ready">
+        <item quantity="one">%1$d file ready to send</item>
+        <item quantity="other">%1$d files ready to send</item>
+    </plurals>
+    <string name="files_files_to_send">Files to send</string>
+    <string name="files_no_files_yet">Nothing selected yet</string>
+    <string name="files_add_files">Add files</string>
+    <string name="files_remove_file">Remove %1$s from the list</string>
+    <plurals name="files_files_selected">
+        <item quantity="one">%1$d file selected</item>
+        <item quantity="other">%1$d files selected</item>
+    </plurals>
+    <string name="files_remote_folder">Remote folder</string>
+    <string name="files_remote_folder_help">Tap a folder to open it, then send the files into it. An existing name is never overwritten: it becomes \"name (1)\".</string>
+    <!-- The action is a floating button now: it is never greyed into silence, so
+         the label states the count and a snackbar explains what is still missing.
+         "to this folder" is left out - the folder is written right above it. -->
+    <string name="files_fab_send">Send files</string>
+    <string name="files_fab_copy">Copy to device</string>
+    <plurals name="files_fab_send_n">
+        <item quantity="one">Send %1$d file</item>
+        <item quantity="other">Send %1$d files</item>
+    </plurals>
+    <plurals name="files_fab_copy_n">
+        <item quantity="one">Copy %1$d file</item>
+        <item quantity="other">Copy %1$d files</item>
+    </plurals>
+    <!-- A tap on the floating button that cannot copy anything yet has to say what
+         is missing; a dead-looking button is what users tap twice. -->
+    <string name="files_snack_no_files">Add the files you want to send first</string>
+    <string name="files_snack_no_selection">Tick the files you want to copy first</string>
+    <string name="files_new_folder">New folder</string>
+    <string name="files_new_folder_title">Create a folder in %1$s</string>
+    <string name="files_new_folder_hint">Folder name</string>
+    <string name="files_new_folder_action">Create</string>
+    <string name="files_folder_created">Folder \"%1$s\" created</string>
+    <string name="files_folder_create_failed">Could not create the folder: %1$s</string>
+    <string name="files_folder_name_invalid">Use a folder name without \"/\"</string>
+    <string name="files_device_folder">Device folder</string>
+    <string name="files_choose_folder">Choose folder</string>
+    <string name="files_device_folder_help">Copied files land here. The app can only reach the folder you pick.</string>
+    <string name="files_no_device_folder">No folder chosen yet</string>
+    <!-- A folder IS chosen, the provider just would not say its name: never claim
+         the user has not picked one. -->
+    <string name="files_device_folder_unnamed">Selected folder</string>
+    <string name="files_tap_to_select">Tap files to select them.</string>
+    <string name="files_empty_dir">This folder is empty</string>
+    <!-- A real server folder holds hundreds of entries, so the listing gets a
+         search box that stays on screen while the rows scroll under it. -->
+    <string name="files_search_hint">Search this folder</string>
+    <string name="files_search_clear">Clear the search</string>
+    <string name="files_search_reset">Clear search</string>
+    <string name="files_search_matches">Showing %1$d of %2$d</string>
+    <string name="files_search_no_matches">Nothing in this folder matches \"%1$s\"</string>
+    <string name="files_browse_idle">Choose a connection to browse its folders</string>
+    <string name="files_connecting">Opening the folder…</string>
+    <string name="files_browse_up">Go up one folder</string>
+    <string name="files_browser_error">Could not open the folder</string>
+    <string name="files_transfers">Transfers</string>
+    <!-- The top-bar door to the copy-queue screen. The count is a badge next to it,
+         so this sentence only has to say WHAT the button opens. -->
+    <string name="files_open_transfers">Show transfers</string>
+    <!-- The same door read aloud. A badge is drawn as a bare number, so TalkBack
+         would announce "Show transfers, 3" (and "99 plus" above the cap) without
+         ever saying what the number counts: the count and its meaning go into the
+         icon's own label instead. -->
+    <string name="files_open_transfers_desc">Show transfers: %1$s</string>
+    <plurals name="files_badge_active">
+        <item quantity="one">%1$d copy in progress</item>
+        <item quantity="other">%1$d copies in progress</item>
+    </plurals>
+    <plurals name="files_badge_failed">
+        <item quantity="one">%1$d copy failed</item>
+        <item quantity="other">%1$d copies failed</item>
+    </plurals>
+    <string name="files_transfers_running_hint">Copies keep running if you leave this screen.</string>
+    <string name="files_clear_finished">Clear finished</string>
+    <!-- The two bands of the queue screen. The rows are re-ordered (what is copying
+         first, finished rows newest-first), so the header has to say which band a
+         row belongs to rather than just "Transfers". -->
+    <plurals name="transfers_section_active">
+        <item quantity="one">%1$d still copying</item>
+        <item quantity="other">%1$d still copying</item>
+    </plurals>
+    <plurals name="transfers_section_finished">
+        <item quantity="one">%1$d finished</item>
+        <item quantity="other">%1$d finished</item>
+    </plurals>
+    <!-- The live line under the screen title: "3 still copying · 2 finished". -->
+    <plurals name="transfers_count_active">
+        <item quantity="one">%1$d in progress</item>
+        <item quantity="other">%1$d in progress</item>
+    </plurals>
+    <plurals name="transfers_count_finished">
+        <item quantity="one">%1$d finished</item>
+        <item quantity="other">%1$d finished</item>
+    </plurals>
+    <string name="transfers_empty_title">No copies yet</string>
+    <string name="transfers_empty_body">Files you share into ScreenLink, or pick on the Files screen, appear here while they copy. Copies keep running if you close this screen.</string>
+    <string name="files_cancel_transfer">Cancel transfer</string>
+    <string name="files_retry_transfer">Try this transfer again</string>
+    <string name="files_status_queued">Waiting</string>
+    <string name="files_status_completed">Done</string>
+    <string name="files_status_failed">Failed</string>
+    <string name="files_status_cancelled">Cancelled</string>
+    <!-- Shown in place of the speed line while a copy that lost its connection is
+         being restarted on a fresh one: the bar has gone back to zero and the user
+         deserves to know why, not that the queue lost work. -->
+    <string name="files_status_reconnecting">Reconnecting to the server…</string>
+    <string name="files_progress_sizes">%1$s of %2$s</string>
+    <string name="files_progress_size_only">%1$s copied</string>
+    <string name="files_progress_time_left">%1$s left</string>
+    <string name="files_progress_eta_unknown">calculating…</string>
+    <plurals name="files_snack_upload_queued">
+        <item quantity="one">%1$d file queued to send</item>
+        <item quantity="other">%1$d files queued to send</item>
+    </plurals>
+    <plurals name="files_snack_download_queued">
+        <item quantity="one">%1$d file queued to copy here</item>
+        <item quantity="other">%1$d files queued to copy here</item>
+    </plurals>
+    <string name="files_snack_no_connection">Choose a connection first</string>
+    <string name="files_snack_no_folder">Choose a device folder first</string>
+    <!-- The send button is enabled by the file list, so the folder can still be
+         missing when it is pressed (browse still loading, or it failed). -->
+    <string name="files_snack_no_remote_folder">Open the remote folder to send into first</string>
+    <string name="files_transfer_cancelled">Transfer cancelled</string>
+    <!-- One tap for a batch that went wrong: cancelling ten rows one by one is
+         not a reasonable thing to ask of a user. -->
+    <string name="files_transfers_cancel_all">Stop all</string>
+    <string name="files_transfers_cancelled_all">All copies stopped</string>
+    <!-- A share that carried no readable file (a folder, a bare text/plain that
+         is not a file) must say so instead of silently opening an empty list. -->
+    <string name="files_share_unsupported">That share did not include a file ScreenLink can copy</string>
+    <plurals name="files_share_partial">
+        <item quantity="one">%1$d shared file could not be read</item>
+        <item quantity="other">%1$d shared files could not be read</item>
+    </plurals>
+
+    <!-- ================= transfer errors ================= -->
+    <string name="err_transfer_permission">No permission to write there — check the folder permissions on the server</string>
+    <string name="err_transfer_not_found">The file or folder no longer exists</string>
+    <string name="err_transfer_connection_lost">The connection dropped during the copy</string>
+    <string name="err_transfer_unsupported">The server does not support that operation</string>
+    <string name="err_transfer_sftp_unavailable">This server has no SFTP support, so files cannot be copied</string>
+    <string name="err_transfer_cancelled">Transfer cancelled</string>
+    <!-- The device folder already holds that name: the queue renamed it, so this
+         only fires when the storage provider answers with an existing file. -->
+    <string name="err_transfer_exists">A file named \"%1$s\" is already in the chosen folder</string>
+    <string name="err_folder_not_writable">Could not write \"%1$s\" in the chosen folder — pick the folder again, or choose a folder that allows writing</string>
+    <!-- The picker handed over a permission that only lives as long as the process:
+         the copy starts normally and only breaks after a reboot, so the user has to
+         be told NOW rather than find it out later. -->
+    <string name="files_error_grant_not_persisted">The system would not keep the permission for what was picked: the copy works now but may fail after a restart</string>
+    <!-- The server said "no" without saying why (full disk, quota, bad path): keep
+         its own words as the detail instead of showing them bare. -->
+    <string name="err_transfer_failed">The copy failed: %1$s</string>
+    <!-- Opening a folder is not a copy, and it only READS: the same SFTP code has
+         to be worded differently or the user goes off to fix permissions they never
+         needed. -->
+    <string name="err_browse_permission">No permission to open that folder — check its permissions on the server</string>
+    <string name="err_browse_connection_lost">The connection dropped while opening the folder</string>
+    <string name="err_browse_failed">The folder did not open: %1$s</string>
+
+    <!-- ================= terminal screen ================= -->
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_no_sessions">no sessions</string>
+    <plurals name="terminal_session_count">
+        <item quantity="one">%1$d session</item>
+        <item quantity="other">%1$d sessions</item>
+    </plurals>
+    <string name="terminal_close">Close terminal (sessions keep running)</string>
+    <string name="terminal_opening">Opening SSH shell…</string>
+    <string name="terminal_could_not_open">Could not open terminal</string>
+    <string name="terminal_remote_closed">The remote side closed the connection.</string>
+    <string name="terminal_back_to_sessions">Back to sessions</string>
+    <string name="terminal_live">Live</string>
+    <string name="terminal_live_desc">Back to live output</string>
+    <string name="terminal_show_keyboard">Show keyboard</string>
+    <!-- GNU Screen copy mode: the server-side scrollback of a screen session. -->
+    <string name="terminal_history_off">History</string>
+    <string name="terminal_history_on">History on</string>
+    <string name="terminal_history_hint">Screen history · typing returns to the prompt</string>
+    <string name="terminal_add_session">Open another session</string>
+    <string name="terminal_close_session">Close session</string>
+    <string name="tab_screen">Screen</string>
+    <string name="connection_fallback">Connection %1$d</string>
+
+    <!-- ================= foreground-service notification ================= -->
+    <string name="notif_channel">ScreenLink terminals</string>
+    <string name="notif_connecting">Connecting…</string>
+    <string name="notif_tap_to_open">Tap to open</string>
+    <string name="notif_disconnect">Disconnect</string>
+    <plurals name="notif_running">
+        <item quantity="one">ScreenLink · %1$d session</item>
+        <item quantity="other">ScreenLink · %1$d sessions</item>
+    </plurals>
+    <!-- The copy queue's own channel and receipt: a long upload has to be visible
+         in the shade (it is what keeps the copy running at all), and the shade is
+         also the only way to stop a batch once the screen is gone. -->
+    <string name="notif_transfer_channel">ScreenLink file copies</string>
+    <plurals name="notif_transfer_active">
+        <item quantity="one">ScreenLink · copying %1$d file</item>
+        <item quantity="other">ScreenLink · copying %1$d files</item>
+    </plurals>
+
+    <!-- ================= terminal keyboard =================
+         Labels are resources so a locale can shorten them to fit the fixed
+         key weights; the command each key SENDS is never localized. -->
+    <string name="key_ctrl_c">Ctrl-C (Interrupt)</string>
+    <string name="key_ctrl_d">Ctrl-D (End of input)</string>
+    <string name="key_ctrl_z">Ctrl-Z (Suspend)</string>
+    <string name="key_ctrl_backslash">Ctrl-Backslash (Quit)</string>
+    <string name="key_backspace">Backspace</string>
+    <string name="key_enter">Enter</string>
+    <string name="key_letters_toggle">Show or hide the letter keys</string>
+    <string name="key_hide">Hide keyboard</string>
+    <string name="key_label_shift">SHIFT</string>
+    <string name="key_label_caps">CAPS</string>
+    <string name="key_label_home">HOME</string>
+    <string name="key_label_end">END</string>
+    <string name="key_label_pgup">PGUP</string>
+    <string name="key_label_pgdn">PGDN</string>
+    <string name="key_label_up">UP</string>
+    <string name="key_label_down">DOWN</string>
+    <string name="key_label_left">LEFT</string>
+    <string name="key_label_right">RIGHT</string>
+    <string name="key_label_detach">Detach</string>
+    <string name="key_label_copy">Copy</string>
+    <string name="key_label_paste">Paste</string>
+    <string name="key_label_del">Del</string>
+    <string name="key_label_enter">Enter</string>
+    <string name="key_label_space">space</string>
+    <!-- ================= dictation (speech-to-text) =================
+         The microphone key on the in-app keyboard plus the strip that shows
+         what was heard. Every failure the recognizer can report gets its own
+         sentence, because the fix differs each time (speak again, check the
+         network, close the other app, or allow the permission in Settings). -->
+    <string name="key_dictate">Dictate</string>
+    <string name="key_dictate_stop">Stop dictating</string>
+    <string name="dictate_starting">Getting the microphone ready…</string>
+    <string name="dictate_finishing">Waiting for the last word…</string>
+    <string name="dictate_insert">Insert what was heard</string>
+    <string name="dictate_discard">Discard the dictation</string>
+    <string name="dictate_dismiss">Dismiss</string>
+    <string name="dictate_open_settings">Open app settings</string>
+    <string name="dictate_error_unavailable">This device has no speech recognizer, so dictation is not available here</string>
+    <string name="dictate_error_no_speech">No speech heard - tap the microphone and speak</string>
+    <string name="dictate_error_no_match">That could not be understood - try again</string>
+    <string name="dictate_error_audio">The microphone did not work, or another app is using it</string>
+    <string name="dictate_error_network">Speech recognition needs the internet and could not connect</string>
+    <string name="dictate_error_server">The speech recognizer stopped answering</string>
+    <string name="dictate_error_client">Dictation could not start on this device</string>
+    <string name="dictate_error_busy">Another app is using speech recognition right now</string>
+    <string name="dictate_error_permission">Dictation needs the microphone - allow it to dictate</string>
+    <string name="dictate_error_permission_settings">Microphone access is blocked - allow it in Settings</string>
+    <string name="dictate_error_language">This device has no speech model for the app’s language</string>
+    <string name="dictate_error_unknown">Dictation stopped</string>
+    <!-- Advanced mode: ML Kit's GenAI recognizer. The strip names the engine that
+         is ACTUALLY listening, because the privacy story differs between them, and
+         the first attempt on a fresh device spends its time downloading the model. -->
+    <string name="dictate_downloading">Downloading the speech model… %1$s so far</string>
+    <string name="dictate_listening_mode">Listening… · %1$s</string>
+    <string name="dictate_backend_advanced">Gemini Nano, on-device</string>
+    <string name="dictate_backend_model">on-device model</string>
+    <string name="dictate_backend_device">device recognizer</string>
+    <string name="dictate_error_no_storage">Not enough storage left for the speech model</string>
+    <string name="dictate_error_needs_update">The on-device model service needs a system update</string>
+
+
+    <!-- Spoken names for symbol keys: a bare glyph is announced inconsistently
+         by screen readers, so every symbol key has a word for it. -->
+    <string name="sym_exclamation">exclamation mark</string>
+    <string name="sym_at">at</string>
+    <string name="sym_hash">hash</string>
+    <string name="sym_dollar">dollar</string>
+    <string name="sym_percent">percent</string>
+    <string name="sym_caret">caret</string>
+    <string name="sym_ampersand">ampersand</string>
+    <string name="sym_asterisk">asterisk</string>
+    <string name="sym_open_parenthesis">open parenthesis</string>
+    <string name="sym_close_parenthesis">close parenthesis</string>
+    <string name="sym_minus">minus</string>
+    <string name="sym_underscore">underscore</string>
+    <string name="sym_equals">equals</string>
+    <string name="sym_plus">plus</string>
+    <string name="sym_open_bracket">open bracket</string>
+    <string name="sym_close_bracket">close bracket</string>
+    <string name="sym_open_brace">open brace</string>
+    <string name="sym_close_brace">close brace</string>
+    <string name="sym_semicolon">semicolon</string>
+    <string name="sym_colon">colon</string>
+    <string name="sym_apostrophe">apostrophe</string>
+    <string name="sym_quote">quote</string>
+    <string name="sym_comma">comma</string>
+    <string name="sym_less_than">less than</string>
+    <string name="sym_period">period</string>
+    <string name="sym_greater_than">greater than</string>
+    <string name="sym_slash">slash</string>
+    <string name="sym_backslash">backslash</string>
+    <string name="sym_pipe">pipe</string>
+    <string name="sym_backtick">backtick</string>
+    <string name="sym_tilde">tilde</string>
+    <string name="sym_question">question mark</string>
+    <string name="sym_space">space</string>
+</resources>

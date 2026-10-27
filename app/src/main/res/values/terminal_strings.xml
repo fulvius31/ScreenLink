@@ -1,0 +1,6 @@
+<resources>
+  <!-- Text-selection toolbar of the in-app terminal view. -->
+  <string name="terminal_action_copy">Copy</string>
+  <string name="terminal_action_paste">Paste</string>
+  <string name="terminal_action_more">More…</string>
+</resources>

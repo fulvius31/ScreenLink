@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Spanish copies of the terminal view's text-selection toolbar strings. -->
+<resources>
+  <string name="terminal_action_copy">Copiar</string>
+  <string name="terminal_action_paste">Pegar</string>
+  <string name="terminal_action_more">Más…</string>
+</resources>

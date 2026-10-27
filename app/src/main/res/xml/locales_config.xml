@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Locales the app is translated into. Android 13+ shows these in the per-app
+     "Languages" settings page and applies the choice to every context, including
+     the foreground service's notification. -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="es" />
+</locale-config>

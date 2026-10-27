@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Keep the SSH terminal session alive while the app is backgrounded. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Dictation on the terminal keyboard. The microphone is opened by the
+         system speech recognizer, not by this app: ScreenLink never reads the
+         audio buffer, keeps no recording, and asks the recognizer to prefer its
+         on-device model (see speech/AndroidSpeechEngine.kt). -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Dictation is an extra, not a feature: an emulator or a device with no
+         microphone simply loses the microphone key, everything else works. -->
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+    <!-- Landscape, tablets, foldables and multi-window are first-class: the
+         activity is explicitly resizeable and handles the size-affecting
+         config changes itself (Compose re-lays out; the SSH sessions live in
+         the foreground service, so nothing is torn down on rotation/resize).
+
+         android:localeConfig lists the translated locales, which is what makes
+         the system per-app "Languages" page offer them on Android 13+. `locale`
+         is deliberately NOT in the activity's configChanges: a language change
+         must recreate the Activity so every string re-resolves (the SSH sessions
+         are owned by the foreground service, so they survive it). -->
+    <application
+        android:name=".ScreenLinkApp"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
+        android:supportsRtl="true"
+        android:resizeableActivity="true"
+        android:theme="@style/Theme.ScreenLink"
+        android:hardwareAccelerated="true"
+        tools:ignore="UnusedAttribute">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode|screenLayout|smallestScreenSize|density"
+            android:windowSoftInputMode="adjustResize">
+            <!-- A second share (or a notification tap) must be delivered to the
+                 running instance through onNewIntent: the default launch mode would
+                 build a NEW Activity on top, and the Files screen the user is already
+                 looking at would never see the file they just shared. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- "Share into ScreenLink": any file type, one file or several. The
+                 activity stages the URIs into its own cache (the grant is temporary)
+                 and opens the Files screen, where the server and folder are picked.
+                 See transfer/ShareInbox.kt. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".session.TerminalSessionService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- Holds the process while the copy queue has work, and is the receipt the
+             user can act on (progress + "Stop all") once the screen is gone. It owns
+             no transfer: the queue lives in the app, see transfer/TransferStore.kt. -->
+        <service
+            android:name=".transfer.TransferProgressService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+    </application>
+</manifest>

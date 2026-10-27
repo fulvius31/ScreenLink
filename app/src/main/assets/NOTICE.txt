@@ -1,0 +1,55 @@
+ScreenLink
+Copyright (c) 2026 Sangiorgi S.r.l.
+
+This application includes code from third parties, credited below. The credit is a
+legal attribution required by the licence those parts are under; this application is
+not affiliated with, endorsed by, or sponsored by them, and it does not contain,
+bundle or require any other application.
+
+
+Terminal emulator and terminal view
+-----------------------------------
+
+The packages
+
+    com.sangiorgisrl.screenlink.terminal.emulator
+    com.sangiorgisrl.screenlink.terminal.view
+    com.sangiorgisrl.screenlink.terminal.view.textselection
+
+are compiled into this application as ordinary application code, under this
+application's own package namespace. They are derived from the `terminal-emulator`
+and `terminal-view` modules of the Termux terminal emulator
+(https://github.com/termux/termux-app), tag `v0.118.0`, Copyright (c) the Termux
+contributors, and are used under the Apache License, Version 2.0.
+
+The upstream code was moved into this application's namespace and substantially
+modified: it is driven by an SSH byte transport instead of a local pseudo-terminal,
+it keeps its own alternate-screen transcript so touch scrolling works inside
+full-screen programs, it tracks the alternate-scroll / mouse / focus modes so wheel
+and touch gestures can be routed correctly, and it has been rewritten in Kotlin
+(the upstream sources were Java). These modifications are covered by the same Apache
+License, Version 2.0.
+
+You can obtain a copy of the Apache License, Version 2.0 at
+http://www.apache.org/licenses/LICENSE-2.0. The full licence text is also shipped
+in this application as `assets/LICENSE-Apache-2.0.txt`.
+
+
+Libraries linked into this application
+--------------------------------------
+
+Each of the following is used under its own licence, which is not modified or
+re-licensed by this application. A copy of most of them is also shipped by the
+build system under `META-INF/` in this package.
+
+    AndroidX (Core, Activity, Lifecycle, Navigation, Compose UI, Material 3)  - Apache 2.0
+    Kotlin standard library and kotlinx-coroutines                            - Apache 2.0
+    Room (AndroidX)                                                           - Apache 2.0
+    JSch, maintained fork com.github.mwiede:jsch                              - BSD-3-Clause
+    Bouncy Castle bcprov-jdk18on                                              - MIT-like (BC)
+
+The text-selection handle drawables follow the Android Open Source Project material
+design assets (Apache License 2.0).
+
+JUnit 5 (Jupiter, EPL-2.0) is used only while developing this application. It is not
+linked into, or shipped inside, this package.
